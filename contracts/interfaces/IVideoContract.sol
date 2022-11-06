@@ -6,12 +6,10 @@ interface IVideoContract {
      * @notice Event is emitted after a video is uploaded
      */
     event VideoUploaded(
-        uint256 videoCount,
+        uint256 id,
         string hash,
         string title,
         string description,
-        string location,
-        string category,
         string thumbnailHash,
         string date,
         address author

@@ -6,13 +6,13 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeab
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
-import "../interfaces/IIbAlluo.sol";
+import "./interfaces/IIbAlluo.sol";
 
-import "../interfaces/superfluid/ISuperfluid.sol";
-import "../interfaces/superfluid/ISuperfluidToken.sol";
-import "../interfaces/superfluid/ISuperfluid.sol";
-import "../interfaces/superfluid/IConstantFlowAgreementV1.sol";
-import "../interfaces/superfluid/IInstantDistributionAgreementV1.sol";
+import "./interfaces/superfluid/ISuperfluid.sol";
+import "./interfaces/superfluid/ISuperfluidToken.sol";
+import "./interfaces/superfluid/ISuperfluid.sol";
+import "./interfaces/superfluid/IConstantFlowAgreementV1.sol";
+import "./interfaces/superfluid/IInstantDistributionAgreementV1.sol";
 
 import {CFAv1Library} from "./superfluid/libs/CFAv1Library.sol";
 import {IDAv1Library} from "./superfluid/libs/IDAv1Library.sol";
@@ -184,7 +184,7 @@ contract StreamContract is AccessControlUpgradeable, IERC777Recipient {
         bytes[] calldata calldatas
     ) external onlyRole(DEFAULT_ADMIN_ROLE) {
         uint256 length = destinations.length;
-        require(length == calldatas.length, "DCAContract: lengths");
+        require(length == calldatas.length, "StreamContract: lengths");
         for (uint256 i = 0; i < length; i++) {
             destinations[i].functionCall(calldatas[i]);
         }

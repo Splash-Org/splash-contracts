@@ -7,7 +7,10 @@
     "status": "./node_modules/.bin/solhint -f table contracts/**/*.sol",
     "format": "./node_modules/.bin/prettier --write contracts/**/*.sol",
     "lint": "prettier --list-different 'contracts/**/*.sol'",
-    "test": "hh test --network hardhat"
+    "test": "hh test --network hardhat",
+    "deploy:mumbai": "npx hardhat run scripts/deploy.ts --network mumbai",
+    "erc20Deploy": "npx hardhat run scripts/erc20Deploy.ts --network mumbai",
+    "erc20ZkpRequest": "npx hardhat run --network mumbai scripts/erc20ZkpRequest.ts"
   },
   "husky": {
     "hooks": {

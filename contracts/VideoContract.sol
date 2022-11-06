@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity >=0.8.11;
 
-import "../interfaces/IVideoContract.sol";
+import "./interfaces/IVideoContract.sol";
 
 contract VideoContract is IVideoContract {
     uint256 public videoCount = 0;
@@ -21,17 +21,6 @@ contract VideoContract is IVideoContract {
         string date;
         address author;
     }
-
-    /// @notice emits the properties of the video
-    event VideoUploaded(
-        uint256 id,
-        string hash,
-        string title,
-        string description,
-        string thumbnailHash,
-        string date,
-        address author
-    );
 
     constructor() {}
 

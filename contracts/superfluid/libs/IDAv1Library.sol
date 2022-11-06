@@ -2,9 +2,9 @@
 pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
-import {ISuperfluid, ISuperfluidToken} from "../../../interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluid, ISuperfluidToken} from "../../interfaces/superfluid/ISuperfluid.sol";
 
-import {IInstantDistributionAgreementV1} from "../../../interfaces/superfluid/IInstantDistributionAgreementV1.sol";
+import {IInstantDistributionAgreementV1} from "../../interfaces/superfluid/IInstantDistributionAgreementV1.sol";
 
 /// @title Instant Distribution Agreement V1 helper library for solidity development.
 /// @author Superfluid

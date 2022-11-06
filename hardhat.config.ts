@@ -26,20 +26,23 @@ const config: HardhatUserConfig = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 1000,
+        runs: 200,
       },
     },
   },
   networks: {
     hardhat: {
       blockGasLimit: 100000000,
+      // allowUnlimitedContractSize: true
     },
-    maticMumbai: {
+    mumbai: {
       url: process.env.RPC_MUMBAI_URL || "",
       accounts:
         process.env.WALLET_PRIVATE_KEY !== undefined
           ? [process.env.WALLET_PRIVATE_KEY]
           : [],
+      // blockGasLimit: 100000000,
+      // blockGasLimit: 100000000429720,
     },
 
     // goerli: {
@@ -57,7 +60,7 @@ const config: HardhatUserConfig = {
     showTimeSpent: true,
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: process.env.POLYGONSCAN_MUMBAI_API_KEY,
   },
 };
 

@@ -6,7 +6,7 @@ import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import {UUPSProxiable} from "./upgradability/UUPSProxiable.sol";
 import {UUPSProxy} from "./upgradability/UUPSProxy.sol";
 
-import {ISuperfluid, ISuperfluidGovernance, ISuperAgreement, ISuperApp, SuperAppDefinitions, ContextDefinitions, BatchOperation, SuperfluidGovernanceConfigs, ISuperfluidToken, ISuperToken, ISuperTokenFactory, IERC20} from "../../interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluid, ISuperfluidGovernance, ISuperAgreement, ISuperApp, SuperAppDefinitions, ContextDefinitions, BatchOperation, SuperfluidGovernanceConfigs, ISuperfluidToken, ISuperToken, ISuperTokenFactory, IERC20} from "../interfaces/superfluid/ISuperfluid.sol";
 
 import {CallUtils} from "./libs/CallUtils.sol";
 import {BaseRelayRecipient} from "./libs/BaseRelayRecipient.sol";

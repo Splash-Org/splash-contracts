@@ -3,7 +3,7 @@ pragma solidity ^0.8.11;
 
 import {UUPSProxiable} from "./upgradability/UUPSProxiable.sol";
 
-import {ISuperfluid, ISuperfluidGovernance, ISuperToken, ISuperAgreement, IERC20, IERC777, TokenInfo} from "../../interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluid, ISuperfluidGovernance, ISuperToken, ISuperAgreement, IERC20, IERC777, TokenInfo} from "../interfaces/superfluid/ISuperfluid.sol";
 import {ISuperfluidToken, SuperfluidToken} from "./SuperfluidToken.sol";
 
 import {ERC777Helper} from "./libs/ERC777Helper.sol";
@@ -88,7 +88,7 @@ contract SuperToken is UUPSProxiable, SuperfluidToken, ISuperToken {
         _name = n;
         _symbol = s;
 
-        // register interfaces
+        // registinterfaces
         ERC777Helper.register(address(this));
     }
 

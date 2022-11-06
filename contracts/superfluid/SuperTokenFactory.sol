@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPLv3
 pragma solidity ^0.8.11;
 
-import {ISuperTokenFactory, ISuperToken, IERC20, ERC20WithTokenInfo} from "../../interfaces/superfluid/ISuperTokenFactory.sol";
+import {ISuperTokenFactory, ISuperToken, IERC20, ERC20WithTokenInfo} from "../interfaces/superfluid/ISuperTokenFactory.sol";
 
-import {ISuperfluid} from "../../interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluid} from "../interfaces/superfluid/ISuperfluid.sol";
 
 import {UUPSProxy} from "./upgradability/UUPSProxy.sol";
 import {UUPSProxiable} from "./upgradability/UUPSProxiable.sol";
