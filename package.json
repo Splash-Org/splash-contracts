@@ -9,6 +9,7 @@
     "lint": "prettier --list-different 'contracts/**/*.sol'",
     "test": "hh test --network hardhat",
     "deploy:mumbai": "npx hardhat run scripts/deploy.ts --network mumbai",
+    "verify:mumbai": "npx hardhat verify --network mumbai 0x015ADed9d83F070425E4873C180f0cfa5512E111",
     "erc20Deploy": "npx hardhat run scripts/erc20Deploy.ts --network mumbai",
     "erc20ZkpRequest": "npx hardhat run --network mumbai scripts/erc20ZkpRequest.ts"
   },

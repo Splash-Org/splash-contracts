@@ -14,7 +14,7 @@ contract VideoContract is IVideoContract {
 
     struct Video {
         uint256 id;
-        string hash;
+        string hashNum;
         string title;
         string description;
         string thumbnailHash;

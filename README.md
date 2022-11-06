@@ -1,6 +1,9 @@
 # Splash Contract Info
 
-- VideoContract Address: 0x0d803afd267a64751c80AE4daDD43CffADf334a0
+- VideoContract Address: 0x015ADed9d83F070425E4873C180f0cfa5512E111
+- Successfully verified contract VideoContract on Etherscan.
+  https://mumbai.polygonscan.com/address/0x015ADed9d83F070425E4873C180f0cfa5512E111#code
+
 - ERC20zkAirdrop Address: 0xB205054785dd17F9c7F52e1cc3D52FF75F95aEf3
 - ZKP Request for ERC721: https://mumbai.polygonscan.com/tx/0x3719bc8fb3a3e09a9ddb041077e066c22926e44e01d6bf6966cf8a7717c41a01
 

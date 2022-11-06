@@ -7,7 +7,7 @@ interface IVideoContract {
      */
     event VideoUploaded(
         uint256 id,
-        string hash,
+        string hashNum,
         string title,
         string description,
         string thumbnailHash,
