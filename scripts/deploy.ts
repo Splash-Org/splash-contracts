@@ -1,18 +1,19 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const VideoContract = await ethers.getContractFactory("VideoContract");
+  const videoContract = await VideoContract.deploy();
+  await videoContract.deployed();
 
-  const lockedAmount = ethers.utils.parseEther("1");
+  const ibAlluoUSD = "0xC2DbaAEA2EfA47EBda3E572aa0e55B742E408BF6";
+  const ibAlluoETH = "0xc677B0918a96ad258A68785C2a3955428DeA7e50";
 
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  const StreamContract = await ethers.getContractFactory("StreamContract");
+  const streamContract = await StreamContract.deploy(ibAlluoUSD, ibAlluoETH);
+  await streamContract.deployed();
 
-  await lock.deployed();
-
-  console.log(`Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`);
+  console.log("VideoContract deployed to:", videoContract.address);
+  console.log("StreamContract deployed to:", streamContract.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

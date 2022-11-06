@@ -35,10 +35,10 @@ const config: HardhatUserConfig = {
       blockGasLimit: 100000000,
     },
     maticMumbai: {
-      url: process.env.MUMBAI_URL || "",
+      url: process.env.RPC_MUMBAI_URL || "",
       accounts:
-        process.env.PRIVATE_KEY_MUMBAI !== undefined
-          ? [process.env.PRIVATE_KEY_MUMBAI]
+        process.env.WALLET_PRIVATE_KEY !== undefined
+          ? [process.env.WALLET_PRIVATE_KEY]
           : [],
     },
 

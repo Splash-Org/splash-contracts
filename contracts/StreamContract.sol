@@ -68,11 +68,7 @@ contract StreamContract is AccessControlUpgradeable, IERC777Recipient {
     bytes32 private constant _TOKENS_RECIPIENT_INTERFACE_HASH =
         keccak256("ERC777TokensRecipient");
 
-    constructor(
-        address _ibAlluoFrom,
-        address _ibAlluoTo,
-        address _streamFromAddress
-    ) {
+    constructor(address _ibAlluoFrom, address _ibAlluoTo) {
         ibAlluoFrom = _ibAlluoFrom;
         ibAlluoTo = _ibAlluoTo;
 
