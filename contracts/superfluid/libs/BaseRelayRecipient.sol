@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPLv3
 pragma solidity ^0.8.11;
 
-import "../../interfaces/superfluid/IRelayRecipient.sol";
-
+import "../../../interfaces/superfluid/IRelayRecipient.sol";
 
 /**
  * @title Base relay recipient contract
@@ -12,11 +11,15 @@ import "../../interfaces/superfluid/IRelayRecipient.sol";
  *      MODIFIED FROM: https://github.com/opengsn/forwarder/blob/master/contracts/BaseRelayRecipient.sol
  */
 abstract contract BaseRelayRecipient is IRelayRecipient {
-
     /**
      * @dev Check if the forwarder is trusted
      */
-    function isTrustedForwarder(address forwarder) public view virtual override returns(bool);
+    function isTrustedForwarder(address forwarder)
+        public
+        view
+        virtual
+        override
+        returns (bool);
 
     /**
      * @dev Return the transaction signer of this call
@@ -25,14 +28,21 @@ abstract contract BaseRelayRecipient is IRelayRecipient {
      * otherwise, return `msg.sender`.
      * should be used in the contract anywhere instead of msg.sender
      */
-    function _getTransactionSigner() internal virtual view returns (address payable ret) {
-        require(msg.data.length >= 24 && isTrustedForwarder(msg.sender), "Not trusted forwarder");
+    function _getTransactionSigner()
+        internal
+        view
+        virtual
+        returns (address payable ret)
+    {
+        require(
+            msg.data.length >= 24 && isTrustedForwarder(msg.sender),
+            "Not trusted forwarder"
+        );
         // At this point we know that the sender is a trusted forwarder,
         // so we trust that the last bytes of msg.data are the verified sender address.
         // extract sender address from the end of msg.data
         assembly {
-            ret := shr(96,calldataload(sub(calldatasize(),20)))
+            ret := shr(96, calldataload(sub(calldatasize(), 20)))
         }
     }
-
 }

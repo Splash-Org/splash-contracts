@@ -1,19 +1,16 @@
 // SPDX-License-Identifier: AGPLv3
-pragma solidity >= 0.8.0;
+pragma solidity >=0.8.0;
 pragma experimental ABIEncoderV2;
 
-import {ISuperfluid, ISuperfluidToken} from "../../interfaces/superfluid/ISuperfluid.sol";
+import {ISuperfluid, ISuperfluidToken} from "../../../interfaces/superfluid/ISuperfluid.sol";
 
-import {
-    IInstantDistributionAgreementV1
-} from "../../interfaces/superfluid/IInstantDistributionAgreementV1.sol";
+import {IInstantDistributionAgreementV1} from "../../../interfaces/superfluid/IInstantDistributionAgreementV1.sol";
 
 /// @title Instant Distribution Agreement V1 helper library for solidity development.
 /// @author Superfluid
 /// @dev Set a variable of type `InitData` in the contract, then call this library's functions
 /// directly `initData.functionName()`.
 library IDAv1Library {
-
     /// @dev Initialization data.
     /// @param host Superfluid host contract for calling agreements.
     /// @param ida Instant Distribution Agreement contract.
@@ -67,15 +64,14 @@ library IDAv1Library {
         address publisher,
         uint32 indexId,
         uint256 amount
-    )
-        internal
-        view
-        returns (
-            uint256 actualAmount,
-            uint128 newIndexValue
-        )
-    {
-        return idaLibrary.ida.calculateDistribution(token, publisher, indexId, amount);
+    ) internal view returns (uint256 actualAmount, uint128 newIndexValue) {
+        return
+            idaLibrary.ida.calculateDistribution(
+                token,
+                publisher,
+                indexId,
+                amount
+            );
     }
 
     /// @dev List all subscriptions of an address
@@ -127,7 +123,13 @@ library IDAv1Library {
             uint256 pendingDistribution
         )
     {
-        return idaLibrary.ida.getSubscription(token, publisher, indexId, subscriber);
+        return
+            idaLibrary.ida.getSubscription(
+                token,
+                publisher,
+                indexId,
+                subscriber
+            );
     }
 
     /// @dev Gets subscription by the agreement ID.
@@ -209,7 +211,8 @@ library IDAv1Library {
         ISuperfluidToken token,
         uint32 indexId
     ) internal returns (bytes memory newCtx) {
-        return createIndexWithCtx(idaLibrary, ctx, token, indexId, new bytes(0));
+        return
+            createIndexWithCtx(idaLibrary, ctx, token, indexId, new bytes(0));
     }
 
     /// @dev Creates a new index in a super app callback. This takes arbitrary user data.
@@ -299,14 +302,15 @@ library IDAv1Library {
         uint32 indexId,
         uint128 indexValue
     ) internal returns (bytes memory newCtx) {
-        return updateIndexValueWithCtx(
-            idaLibrary,
-            ctx,
-            token,
-            indexId,
-            indexValue,
-            new bytes(0)
-        );
+        return
+            updateIndexValueWithCtx(
+                idaLibrary,
+                ctx,
+                token,
+                indexId,
+                indexValue,
+                new bytes(0)
+            );
     }
 
     /// @dev Updates an index value in a super app callback. This distributes an amount of tokens
@@ -400,7 +404,15 @@ library IDAv1Library {
         uint32 indexId,
         uint256 amount
     ) internal returns (bytes memory newCtx) {
-        return distributeWithCtx(idaLibrary, ctx, token, indexId, amount, new bytes(0));
+        return
+            distributeWithCtx(
+                idaLibrary,
+                ctx,
+                token,
+                indexId,
+                amount,
+                new bytes(0)
+            );
     }
 
     /// @dev Distributes tokens in a super app callback. Instead of passing the new total index
@@ -453,7 +465,13 @@ library IDAv1Library {
         address publisher,
         uint32 indexId
     ) internal {
-        approveSubscription(idaLibrary, token, publisher, indexId, new bytes(0));
+        approveSubscription(
+            idaLibrary,
+            token,
+            publisher,
+            indexId,
+            new bytes(0)
+        );
     }
 
     /// @dev Approves a subscription to an index. The subscriber's real time balance will not update
@@ -502,14 +520,15 @@ library IDAv1Library {
         address publisher,
         uint32 indexId
     ) internal returns (bytes memory newCtx) {
-        return approveSubscriptionWithCtx(
-            idaLibrary,
-            ctx,
-            token,
-            publisher,
-            indexId,
-            new bytes(0)
-        );
+        return
+            approveSubscriptionWithCtx(
+                idaLibrary,
+                ctx,
+                token,
+                publisher,
+                indexId,
+                new bytes(0)
+            );
     }
 
     /// @dev Approves a subscription to an index in a super app callback. The subscriber's real time
@@ -600,14 +619,15 @@ library IDAv1Library {
         address publisher,
         uint32 indexId
     ) internal returns (bytes memory newCtx) {
-        return revokeSubscriptionWithCtx(
-            idaLibrary,
-            ctx,
-            token,
-            publisher,
-            indexId,
-            new bytes(0)
-        );
+        return
+            revokeSubscriptionWithCtx(
+                idaLibrary,
+                ctx,
+                token,
+                publisher,
+                indexId,
+                new bytes(0)
+            );
     }
 
     /// @dev Revokes a previously approved subscription in a super app callback. This takes
@@ -656,7 +676,14 @@ library IDAv1Library {
         address subscriber,
         uint128 units
     ) internal {
-        updateSubscriptionUnits(idaLibrary, token, indexId, subscriber, units, new bytes(0));
+        updateSubscriptionUnits(
+            idaLibrary,
+            token,
+            indexId,
+            subscriber,
+            units,
+            new bytes(0)
+        );
     }
 
     /// @dev Updates the units of a subscription. This changes the number of shares the subscriber
@@ -707,15 +734,16 @@ library IDAv1Library {
         address subscriber,
         uint128 units
     ) internal returns (bytes memory newCtx) {
-        return updateSubscriptionUnitsWithCtx(
-            idaLibrary,
-            ctx,
-            token,
-            indexId,
-            subscriber,
-            units,
-            new bytes(0)
-        );
+        return
+            updateSubscriptionUnitsWithCtx(
+                idaLibrary,
+                ctx,
+                token,
+                indexId,
+                subscriber,
+                units,
+                new bytes(0)
+            );
     }
 
     /// @dev Updates the units of a subscription in a super app callback. This changes the number of
@@ -766,7 +794,14 @@ library IDAv1Library {
         uint32 indexId,
         address subscriber
     ) internal {
-        deleteSubscription(idaLibrary, token, publisher, indexId, subscriber, new bytes(0));
+        deleteSubscription(
+            idaLibrary,
+            token,
+            publisher,
+            indexId,
+            subscriber,
+            new bytes(0)
+        );
     }
 
     /// @dev Deletes a subscription, setting a subcriber's units to zero. This takes arbitrary user
@@ -816,15 +851,16 @@ library IDAv1Library {
         uint32 indexId,
         address subscriber
     ) internal returns (bytes memory newCtx) {
-        return deleteSubscriptionWithCtx(
-            idaLibrary,
-            ctx,
-            token,
-            publisher,
-            indexId,
-            subscriber,
-            new bytes(0)
-        );
+        return
+            deleteSubscriptionWithCtx(
+                idaLibrary,
+                ctx,
+                token,
+                publisher,
+                indexId,
+                subscriber,
+                new bytes(0)
+            );
     }
 
     /// @dev Deletes a subscription in a super app callback, setting a subcriber's units to zero.
@@ -925,15 +961,16 @@ library IDAv1Library {
         uint32 indexId,
         address subscriber
     ) internal returns (bytes memory newCtx) {
-        return claimWithCtx(
-            idaLibrary,
-            ctx,
-            token,
-            publisher,
-            indexId,
-            subscriber,
-            new bytes(0)
-        );
+        return
+            claimWithCtx(
+                idaLibrary,
+                ctx,
+                token,
+                publisher,
+                indexId,
+                subscriber,
+                new bytes(0)
+            );
     }
 
     /// @dev Claims pending distribution in a super app callback. Subscription should not be

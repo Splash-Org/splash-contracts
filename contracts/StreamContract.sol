@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.17;
+pragma solidity >=0.8.9;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
@@ -104,11 +104,11 @@ contract StreamContract is AccessControlUpgradeable, IERC777Recipient {
             1
         );
         // TODO: can kill this as we're not sending RIC token to user
-        idaV1Lib.approveSubscription(
-            ISuperfluidToken(0x263026E7e53DBFDce5ae55Ade22493f828922965),
-            address(this),
-            3
-        );
+        // idaV1Lib.approveSubscription(
+        //     ISuperfluidToken(0x263026E7e53DBFDce5ae55Ade22493f828922965),
+        //     address(this),
+        //     3
+        // );
 
         // Set up ERC777 Recipient
         _ERC1820_REGISTRY.setInterfaceImplementer(

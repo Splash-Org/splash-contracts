@@ -1,22 +1,16 @@
 // SPDX-License-Identifier: AGPLv3
-pragma solidity >= 0.8.2;
+pragma solidity >=0.8.11;
 
-import { ISuperfluidGovernance } from "./ISuperfluidGovernance.sol";
-import { ISuperfluidToken } from "./ISuperfluidToken.sol";
-import { ISuperToken } from "./ISuperToken.sol";
-import { ISuperTokenFactory } from "./ISuperTokenFactory.sol";
-import { ISuperAgreement } from "./ISuperAgreement.sol";
-import { ISuperApp } from "./ISuperApp.sol";
-import {
-    BatchOperation,
-    ContextDefinitions,
-    FlowOperatorDefinitions,
-    SuperAppDefinitions,
-    SuperfluidGovernanceConfigs
-} from "./Definitions.sol";
-import { TokenInfo } from "./TokenInfo.sol";
-import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import { IERC777 } from "@openzeppelin/contracts/token/ERC777/IERC777.sol";
+import {ISuperfluidGovernance} from "./ISuperfluidGovernance.sol";
+import {ISuperfluidToken} from "./ISuperfluidToken.sol";
+import {ISuperToken} from "./ISuperToken.sol";
+import {ISuperTokenFactory} from "./ISuperTokenFactory.sol";
+import {ISuperAgreement} from "./ISuperAgreement.sol";
+import {ISuperApp} from "./ISuperApp.sol";
+import {BatchOperation, ContextDefinitions, FlowOperatorDefinitions, SuperAppDefinitions, SuperfluidGovernanceConfigs} from "./Definitions.sol";
+import {TokenInfo} from "./TokenInfo.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC777} from "@openzeppelin/contracts/token/ERC777/IERC777.sol";
 
 /**
  * @title Host interface
@@ -29,7 +23,6 @@ import { IERC777 } from "@openzeppelin/contracts/token/ERC777/IERC777.sol";
  *
  */
 interface ISuperfluid {
-
     /**************************************************************************
      * Time
      *
@@ -48,18 +41,25 @@ interface ISuperfluid {
     /**
      * @dev Get the current governance address of the Superfluid host
      */
-    function getGovernance() external view returns(ISuperfluidGovernance governance);
+    function getGovernance()
+        external
+        view
+        returns (ISuperfluidGovernance governance);
 
     /**
      * @dev Replace the current governance with a new one
      */
     function replaceGovernance(ISuperfluidGovernance newGov) external;
+
     /**
      * @dev Governance replaced event
      * @param oldGov Address of the old governance contract
      * @param newGov Address of the new governance contract
      */
-    event GovernanceReplaced(ISuperfluidGovernance oldGov, ISuperfluidGovernance newGov);
+    event GovernanceReplaced(
+        ISuperfluidGovernance oldGov,
+        ISuperfluidGovernance newGov
+    );
 
     /**************************************************************************
      * Agreement Whitelisting
@@ -69,10 +69,12 @@ interface ISuperfluid {
      * @dev Register a new agreement class to the system
      * @param agreementClassLogic Initial agreement class code
      *
-     * @custom:modifiers 
+     * @custom:modifiers
      * - onlyGovernance
      */
-    function registerAgreementClass(ISuperAgreement agreementClassLogic) external;
+    function registerAgreementClass(ISuperAgreement agreementClassLogic)
+        external;
+
     /**
      * @notice Agreement class registered event
      * @dev agreementType is the keccak256 hash of: "org.superfluid-finance.agreements.<AGREEMENT_NAME>.<VERSION>"
@@ -82,13 +84,14 @@ interface ISuperfluid {
     event AgreementClassRegistered(bytes32 agreementType, address code);
 
     /**
-    * @dev Update code of an agreement class
-    * @param agreementClassLogic New code for the agreement class
-    *
-    * @custom:modifiers 
-    *  - onlyGovernance
-    */
+     * @dev Update code of an agreement class
+     * @param agreementClassLogic New code for the agreement class
+     *
+     * @custom:modifiers
+     *  - onlyGovernance
+     */
     function updateAgreementClass(ISuperAgreement agreementClassLogic) external;
+
     /**
      * @notice Agreement class updated event
      * @dev agreementType is the keccak256 hash of: "org.superfluid-finance.agreements.<AGREEMENT_NAME>.<VERSION>"
@@ -98,57 +101,72 @@ interface ISuperfluid {
     event AgreementClassUpdated(bytes32 agreementType, address code);
 
     /**
-    * @notice Check if the agreement type is whitelisted
-    * @dev agreementType is the keccak256 hash of: "org.superfluid-finance.agreements.<AGREEMENT_NAME>.<VERSION>"
-    */
-    function isAgreementTypeListed(bytes32 agreementType) external view returns(bool yes);
+     * @notice Check if the agreement type is whitelisted
+     * @dev agreementType is the keccak256 hash of: "org.superfluid-finance.agreements.<AGREEMENT_NAME>.<VERSION>"
+     */
+    function isAgreementTypeListed(bytes32 agreementType)
+        external
+        view
+        returns (bool yes);
 
     /**
-    * @dev Check if the agreement class is whitelisted
-    */
-    function isAgreementClassListed(ISuperAgreement agreementClass) external view returns(bool yes);
+     * @dev Check if the agreement class is whitelisted
+     */
+    function isAgreementClassListed(ISuperAgreement agreementClass)
+        external
+        view
+        returns (bool yes);
 
     /**
-    * @notice Get agreement class
-    * @dev agreementType is the keccak256 hash of: "org.superfluid-finance.agreements.<AGREEMENT_NAME>.<VERSION>"
-    */
-    function getAgreementClass(bytes32 agreementType) external view returns(ISuperAgreement agreementClass);
+     * @notice Get agreement class
+     * @dev agreementType is the keccak256 hash of: "org.superfluid-finance.agreements.<AGREEMENT_NAME>.<VERSION>"
+     */
+    function getAgreementClass(bytes32 agreementType)
+        external
+        view
+        returns (ISuperAgreement agreementClass);
 
     /**
-    * @dev Map list of the agreement classes using a bitmap
-    * @param bitmap Agreement class bitmap
-    */
+     * @dev Map list of the agreement classes using a bitmap
+     * @param bitmap Agreement class bitmap
+     */
     function mapAgreementClasses(uint256 bitmap)
-        external view
+        external
+        view
         returns (ISuperAgreement[] memory agreementClasses);
 
     /**
-    * @notice Create a new bitmask by adding a agreement class to it
-    * @dev agreementType is the keccak256 hash of: "org.superfluid-finance.agreements.<AGREEMENT_NAME>.<VERSION>"
-    * @param bitmap Agreement class bitmap
-    */
+     * @notice Create a new bitmask by adding a agreement class to it
+     * @dev agreementType is the keccak256 hash of: "org.superfluid-finance.agreements.<AGREEMENT_NAME>.<VERSION>"
+     * @param bitmap Agreement class bitmap
+     */
     function addToAgreementClassesBitmap(uint256 bitmap, bytes32 agreementType)
-        external view
+        external
+        view
         returns (uint256 newBitmap);
 
     /**
-    * @notice Create a new bitmask by removing a agreement class from it
-    * @dev agreementType is the keccak256 hash of: "org.superfluid-finance.agreements.<AGREEMENT_NAME>.<VERSION>"
-    * @param bitmap Agreement class bitmap
-    */
-    function removeFromAgreementClassesBitmap(uint256 bitmap, bytes32 agreementType)
-        external view
-        returns (uint256 newBitmap);
+     * @notice Create a new bitmask by removing a agreement class from it
+     * @dev agreementType is the keccak256 hash of: "org.superfluid-finance.agreements.<AGREEMENT_NAME>.<VERSION>"
+     * @param bitmap Agreement class bitmap
+     */
+    function removeFromAgreementClassesBitmap(
+        uint256 bitmap,
+        bytes32 agreementType
+    ) external view returns (uint256 newBitmap);
 
     /**************************************************************************
-    * Super Token Factory
-    **************************************************************************/
+     * Super Token Factory
+     **************************************************************************/
 
     /**
      * @dev Get the super token factory
      * @return factory The factory
      */
-    function getSuperTokenFactory() external view returns (ISuperTokenFactory factory);
+    function getSuperTokenFactory()
+        external
+        view
+        returns (ISuperTokenFactory factory);
 
     /**
      * @dev Get the super token factory logic (applicable to upgradable deployment)
@@ -161,6 +179,7 @@ interface ISuperfluid {
      * @param newFactory New factory logic
      */
     function updateSuperTokenFactory(ISuperTokenFactory newFactory) external;
+
     /**
      * @dev SuperToken factory updated event
      * @param newFactory Address of the new factory
@@ -172,6 +191,7 @@ interface ISuperfluid {
      * @dev Refer to ISuperTokenFactory.Upgradability for expected behaviours
      */
     function updateSuperTokenLogic(ISuperToken token) external;
+
     /**
      * @dev SuperToken logic updated event
      * @param code Address of the new SuperToken logic
@@ -190,6 +210,7 @@ interface ISuperfluid {
      * `SuperAppDefinitions`
      */
     function registerApp(uint256 configWord) external;
+
     /**
      * @dev App registered event
      * @param app Address of jailed app
@@ -205,7 +226,10 @@ interface ISuperfluid {
      * While the message sender must be the super app itself, the transaction sender (tx.origin)
      * must be the deployer account the registration key was issued for.
      */
-    function registerAppWithKey(uint256 configWord, string calldata registrationKey) external;
+    function registerAppWithKey(
+        uint256 configWord,
+        string calldata registrationKey
+    ) external;
 
     /**
      * @dev Message sender (must be a contract) declares app as a super app
@@ -219,22 +243,21 @@ interface ISuperfluid {
      * @dev Query if the app is registered
      * @param app Super app address
      */
-    function isApp(ISuperApp app) external view returns(bool);
+    function isApp(ISuperApp app) external view returns (bool);
 
     /**
      * @dev Query app level
      * @param app Super app address
      */
-    function getAppLevel(ISuperApp app) external view returns(uint8 appLevel);
+    function getAppLevel(ISuperApp app) external view returns (uint8 appLevel);
 
     /**
      * @dev Get the manifest of the super app
      * @param app Super app address
      */
-    function getAppManifest(
-        ISuperApp app
-    )
-        external view
+    function getAppManifest(ISuperApp app)
+        external
+        view
         returns (
             bool isSuperApp,
             bool isJailed,
@@ -258,11 +281,9 @@ interface ISuperfluid {
      * @param app Super app address
      * @param targetApp The target super app address
      */
-    function isCompositeAppAllowed(
-        ISuperApp app,
-        ISuperApp targetApp
-    )
-        external view
+    function isCompositeAppAllowed(ISuperApp app, ISuperApp targetApp)
+        external
+        view
         returns (bool isAppAllowed);
 
     /**************************************************************************
@@ -289,9 +310,11 @@ interface ISuperfluid {
         bytes calldata ctx
     )
         external
-        // onlyAgreement
-        // assertValidCtx(ctx)
-        returns(bytes memory cbdata);
+        returns (
+            // onlyAgreement
+            // assertValidCtx(ctx)
+            bytes memory cbdata
+        );
 
     /**
      * @dev (For agreements) Call the app after callback
@@ -308,9 +331,11 @@ interface ISuperfluid {
         bytes calldata ctx
     )
         external
-        // onlyAgreement
-        // assertValidCtx(ctx)
-        returns(bytes memory newCtx);
+        returns (
+            // onlyAgreement
+            // assertValidCtx(ctx)
+            bytes memory newCtx
+        );
 
     /**
      * @dev (For agreements) Create a new callback stack
@@ -328,9 +353,11 @@ interface ISuperfluid {
         ISuperfluidToken appAllowanceToken
     )
         external
-        // onlyAgreement
-        // assertValidCtx(ctx)
-        returns (bytes memory newCtx);
+        returns (
+            // onlyAgreement
+            // assertValidCtx(ctx)
+            bytes memory newCtx
+        );
 
     /**
      * @dev (For agreements) Pop from the current app callback stack
@@ -338,17 +365,16 @@ interface ISuperfluid {
      * @param  appAllowanceUsedDelta   App allowance used by the app.
      * @return newCtx                  The current context of the transaction.
      *
-     * @custom:security 
+     * @custom:security
      * - Here we cannot do assertValidCtx(ctx), since we do not really save the stack in memory.
      * - Hence there is still implicit trust that the agreement handles the callback push/pop pair correctly.
      */
-    function appCallbackPop(
-        bytes calldata ctx,
-        int256 appAllowanceUsedDelta
-    )
+    function appCallbackPop(bytes calldata ctx, int256 appAllowanceUsedDelta)
         external
-        // onlyAgreement
-        returns (bytes memory newCtx);
+        returns (
+            // onlyAgreement
+            bytes memory newCtx
+        );
 
     /**
      * @dev (For agreements) Use app allowance.
@@ -363,9 +389,11 @@ interface ISuperfluid {
         int256 appAllowanceUsedDelta
     )
         external
-        // onlyAgreement
-        // assertValidCtx(ctx)
-        returns (bytes memory newCtx);
+        returns (
+            // onlyAgreement
+            // assertValidCtx(ctx)
+            bytes memory newCtx
+        );
 
     /**
      * @dev (For agreements) Jail the app.
@@ -379,9 +407,11 @@ interface ISuperfluid {
         uint256 reason
     )
         external
-        // onlyAgreement
-        // assertValidCtx(ctx)
-        returns (bytes memory newCtx);
+        returns (
+            // onlyAgreement
+            // assertValidCtx(ctx)
+            bytes memory newCtx
+        );
 
     /**
      * @dev Jail event for the app
@@ -402,21 +432,23 @@ interface ISuperfluid {
      * contract.
      *************************************************************************/
 
-     /**
-      * @dev Call agreement function
-      * @param agreementClass The agreement address you are calling
-      * @param callData The contextual call data with placeholder ctx
-      * @param userData Extra user data being sent to the super app callbacks
-      */
-     function callAgreement(
-         ISuperAgreement agreementClass,
-         bytes calldata callData,
-         bytes calldata userData
-     )
+    /**
+     * @dev Call agreement function
+     * @param agreementClass The agreement address you are calling
+     * @param callData The contextual call data with placeholder ctx
+     * @param userData Extra user data being sent to the super app callbacks
+     */
+    function callAgreement(
+        ISuperAgreement agreementClass,
+        bytes calldata callData,
+        bytes calldata userData
+    )
         external
-        //cleanCtx
-        //isAgreement(agreementClass)
-        returns(bytes memory returnedData);
+        returns (
+            //cleanCtx
+            //isAgreement(agreementClass)
+            bytes memory returnedData
+        );
 
     /**
      * @notice Call app action
@@ -425,15 +457,14 @@ interface ISuperfluid {
      *
      * @custom:note See "Contextless Call Proxies" above for more about contextual call data.
      */
-    function callAppAction(
-        ISuperApp app,
-        bytes calldata callData
-    )
+    function callAppAction(ISuperApp app, bytes calldata callData)
         external
-        //cleanCtx
-        //isAppActive(app)
-        //isValidAppAction(callData)
-        returns(bytes memory returnedData);
+        returns (
+            //cleanCtx
+            //isAppActive(app)
+            //isValidAppAction(callData)
+            bytes memory returnedData
+        );
 
     /**************************************************************************
      * Contextual Call Proxies and Context Utilities
@@ -468,7 +499,6 @@ interface ISuperfluid {
         uint256 timestamp;
         // The intended message sender for the call
         address msgSender;
-
         //
         // Callback context
         //
@@ -476,7 +506,6 @@ interface ISuperfluid {
         bytes4 agreementSelector;
         // User provided data for app callbacks
         bytes userData;
-
         //
         // App context
         //
@@ -499,9 +528,12 @@ interface ISuperfluid {
         bytes calldata ctx
     )
         external
-        // requireValidCtx(ctx)
-        // onlyAgreement(agreementClass)
-        returns (bytes memory newCtx, bytes memory returnedData);
+        returns (
+            // requireValidCtx(ctx)
+            // onlyAgreement(agreementClass)
+            bytes memory newCtx,
+            bytes memory returnedData
+        );
 
     function callAppActionWithContext(
         ISuperApp app,
@@ -509,19 +541,22 @@ interface ISuperfluid {
         bytes calldata ctx
     )
         external
-        // requireValidCtx(ctx)
-        // isAppActive(app)
-        returns (bytes memory newCtx);
+        returns (
+            // requireValidCtx(ctx)
+            // isAppActive(app)
+            bytes memory newCtx
+        );
 
     function decodeCtx(bytes calldata ctx)
-        external pure
+        external
+        pure
         returns (Context memory context);
 
     function isCtxValid(bytes calldata ctx) external view returns (bool);
 
     /**************************************************************************
-    * Batch call
-    **************************************************************************/
+     * Batch call
+     **************************************************************************/
     /**
      * @dev Batch operation data
      */
@@ -555,7 +590,7 @@ interface ISuperfluid {
      * TODO: turning these off because solidity-coverage doesn't like it
      *************************************************************************/
 
-     /* /// @dev The current superfluid context is clean.
+    /* /// @dev The current superfluid context is clean.
      modifier cleanCtx() virtual;
 
      /// @dev Require the ctx being valid.
