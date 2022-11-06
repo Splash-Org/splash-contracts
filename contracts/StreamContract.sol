@@ -17,7 +17,7 @@ import "./interfaces/superfluid/IInstantDistributionAgreementV1.sol";
 import {CFAv1Library} from "./superfluid/libs/CFAv1Library.sol";
 import {IDAv1Library} from "./superfluid/libs/IDAv1Library.sol";
 
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 
 interface IERC777Recipient {
     /**
@@ -60,6 +60,7 @@ contract StreamContract is AccessControlUpgradeable, IERC777Recipient {
         0x3E14dC1b13c488a8d5D310918780c983bD5982E7;
     address public ibAlluoFrom;
     address public ibAlluoTo;
+    address public approvedAddress;
 
     CFAv1Library.InitData public cfaV1Lib;
     IDAv1Library.InitData public idaV1Lib;
@@ -71,6 +72,7 @@ contract StreamContract is AccessControlUpgradeable, IERC777Recipient {
     constructor(address _ibAlluoFrom, address _ibAlluoTo) {
         ibAlluoFrom = _ibAlluoFrom;
         ibAlluoTo = _ibAlluoTo;
+        approvedAddress = msg.sender;
 
         // Initialise key Superfluid parameters
         ISuperfluid host = ISuperfluid(superfluidHost);
@@ -93,18 +95,16 @@ contract StreamContract is AccessControlUpgradeable, IERC777Recipient {
         bytes memory data = IIbAlluo(_ibAlluoFrom).formatPermissions();
         host.callAgreement(host.getAgreementClass(CFA_ID), data, "0x");
 
-        // // Grant permissions so that Ricochet's DCA contract can airdrop you tokens
         idaV1Lib.approveSubscription(
             ISuperfluidToken(IIbAlluo(ibAlluoTo).superToken()),
-            address(this),
+            approvedAddress,
             1
         );
-        // TODO: can kill this as we're not sending RIC token to user
-        // idaV1Lib.approveSubscription(
-        //     ISuperfluidToken(0x263026E7e53DBFDce5ae55Ade22493f828922965),
-        //     address(this),
-        //     3
-        // );
+        idaV1Lib.approveSubscription(
+            ISuperfluidToken(0x263026E7e53DBFDce5ae55Ade22493f828922965),
+            approvedAddress,
+            3
+        );
 
         // Set up ERC777 Recipient
         _ERC1820_REGISTRY.setInterfaceImplementer(

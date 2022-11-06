@@ -41,6 +41,7 @@ const config: HardhatUserConfig = {
         process.env.WALLET_PRIVATE_KEY !== undefined
           ? [process.env.WALLET_PRIVATE_KEY]
           : [],
+      gasPrice: "auto",
       // blockGasLimit: 100000000,
       // blockGasLimit: 100000000429720,
     },
